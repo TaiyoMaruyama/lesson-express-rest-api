@@ -1,0 +1,17 @@
+post:
+  summary:
+    任意のユーザー情報を新規登録する
+  tags:
+    - User
+  responses:
+    201:
+      description: ユーザーのIDをパラメータに含むと、任意のユーザーの情報を更新できる。
+      schema:
+        type: array
+        example: [
+          {
+            id: xxxx-yyyy-zzzzzzz, 
+            title: ReactNative@v0.63で追加されたPressableが地味にすごい,
+            link: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+          }
+        ]

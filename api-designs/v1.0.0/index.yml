@@ -1,0 +1,76 @@
+# swaggerバージョン宣言
+swagger: "2.0"
+
+info:
+  version: 1.0.0
+  title: Lesson express and REST API
+  description: |
+    - REST APIの実装練習を行う
+    - 図書館のような本の管理周りのAPIを作成する
+schemes:
+  - https
+host: localhost:8080
+basePath: /api/v1
+
+tags:
+  - name: "User"
+    description: ユーザーを管理する
+  - name: "Book"
+    description: 本の情報を管理する
+
+
+paths:
+  /user/{id}:
+    get:
+      summary:
+        任意のユーザーを取得する
+      tags:
+        - User
+      responses:
+        200:
+          description:
+            ユーザーのIDをパラメータに含むと、任意のユーザーの情報を取得できる。
+            IDは
+          schema:
+            type: array
+            example: [
+              {
+                name: ほげほげ,
+                email: hoge@example.com,
+                password: 12345678
+              }
+            ]
+    put:
+      summary:
+        任意のユーザー情報を更新する
+      tags:
+        - User
+      responses:
+        201:
+          description: ユーザーのIDをパラメータに含むと、任意のユーザーの情報を更新できる。
+          schema:
+            type: array
+            example: [
+              {
+                id: xxxx-yyyy-zzzzzzz, 
+                title: ReactNative@v0.63で追加されたPressableが地味にすごい,
+                link: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+              }
+            ]
+    delete:
+      summary:
+        任意のユーザー情報を更新する
+      tags:
+        - User
+      responses:
+        201:
+          description: ユーザーのIDをパラメータに含むと、任意のユーザーの情報を更新できる。
+          schema:
+            type: array
+            example: [
+              {
+                id: xxxx-yyyy-zzzzzzz, 
+                title: ReactNative@v0.63で追加されたPressableが地味にすごい,
+                link: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+              }
+            ]
