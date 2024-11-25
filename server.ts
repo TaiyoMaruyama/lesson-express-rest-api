@@ -19,39 +19,40 @@ app.post("/signup", async (req: any, res: any) => {
   const { email, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
   if (demoUsers.find((user) => user.email === email)) {
-    return res.status(400).send("User already exists");
+    return res.status(400).send("Invalid credentials");
   }
   const user = { id: demoUsers.length + 1, email, password: hashedPassword };
   demoUsers.push(user);
+  // 本来は、demoUsersをDBに預ける
   res.status(201).send("User created");
 });
 
 app.post("/login", async (req: any, res: any) => {
   const { email, password } = req.body;
-  const targetUser = demoUsers.find((user) => user.email === email);
 
+  // リクエストにあるemailがDBにあるかを判断する
+  // 実際はDBから探しだす
+  const targetUser = demoUsers.find((user) => user.email === email);
   if (!targetUser) {
-    return res.status(400).send("User not found");
+    return res.status(400).send("Invalid credentials");
   }
 
+  // 入力されたパスワードが、DBのハッシュ化されたパスワードと一致するか
   const isMatch = await bcrypt.compare(password, targetUser.password);
   if (!isMatch) {
-    return res.status(400).send("Invalid password");
+    return res.status(400).send("Invalid credentials");
   }
 
   const token = jwt.sign(
     { id: targetUser.id, email: targetUser.email },
-    // 本来は以下の秘密鍵等を環境変数等に記述する
+    // [WARN]:本来は以下の秘密鍵等を環境変数等に記述する
     "secret_key",
     { expiresIn: "1h" }
   );
 
-  res.status(200).send({ token });
-});
-
-// 登録済みユーザー一覧の取得←本来は必要ない機能
-app.get("/user", (_req: any, res: any) => {
-  res.send(demoUsers);
+  // 発行されたアクセストークンをクライアントへ返す
+  // TODO：Cookieを学習後は、Cookieで管理する
+  res.status(200).json({ token });
 });
 
 // ヘルスチェック
