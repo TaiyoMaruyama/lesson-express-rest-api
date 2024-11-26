@@ -47,11 +47,10 @@ app.post("/login", async (req: any, res: any) => {
     { id: targetUser.id, email: targetUser.email },
     // [WARN]:本来は以下の秘密鍵等を環境変数等に記述する
     "secret_key",
-    { expiresIn: "1h" }
+    { expiresIn: 60 * 60 * 24 }
   );
 
   // 発行されたアクセストークンをクライアントへ返す
-  // TODO：Cookieを学習後は、Cookieで管理する
   res.status(200).json({ token });
 });
 
